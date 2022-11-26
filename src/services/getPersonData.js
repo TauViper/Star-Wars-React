@@ -11,4 +11,8 @@ export const getPersonId = url => getId(url, API_PERSON)
 
 export const getPersonImage = id => `${GUIDE_IMG_PEOPLE}/${id+GUIDE_IMG}`
 
-
+export const getPersonPage = url =>{
+    const pos = url.lastIndexOf(API_PARAM_PAGE)
+    const id = url.slice(pos+API_PARAM_PAGE.length, url.length)
+    return Number(id)
+}

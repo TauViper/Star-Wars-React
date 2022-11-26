@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {API_PEOPLE} from "constans/api";
-import {getPersonId, getPersonImage, getPersonPageId} from "services/getPersonData";
+import {getPersonId, getPersonImage, getPersonPage, getPersonPageId} from "services/getPersonData";
 import {PersonPageList} from "components/PersonPageComponents/PersonPageList";
 import {getApiResource} from "utils/network";
 import {useQueryParams} from "hooks/useQueryParams";
@@ -12,6 +12,11 @@ import {PersonNav} from "components/PersonNav/PersonNav";
 
 export const PersonPage = ({setErrorApi}) => {
     const [person, setPerson] = useState(null)
+    const [nextPage, setNextPage] = useState(null)
+    const [previousPage, setPreviousPage] = useState(null)
+    const [counter, setCounter] = useState(1)
+
+const query = useQueryParams().get('list')
 
 
 
@@ -36,7 +41,9 @@ export const PersonPage = ({setErrorApi}) => {
                 }
             })
             setPerson(personList) /*Изменения useState работает внутри функции запроса*/
-
+            setPreviousPage(list.previous)
+            setNextPage(list.next)
+            setCounter(getPersonPage(url))
 
             setErrorApi(false)
         }else{
@@ -49,7 +56,12 @@ export const PersonPage = ({setErrorApi}) => {
         }, [])
         return (
                     <>
-
+                    <PersonNav
+                        getResource = {getResource}
+                        previousPage = {previousPage}
+                        nextPage = {nextPage}
+                        counter={counter}
+                    />
                         {person &&  <PersonPageList person = {person}/>}
                     </>        /* так как useState = null то используется тернарник {state && (state)} если есть информация то она выводиться
                 на страницу. */
