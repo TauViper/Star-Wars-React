@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './PersonNav.module.css'
 import {Link} from "react-router-dom";
+import {UiButton} from "components/UI/UiButton/UiButton";
 
 export const PersonNav = ({getResource, nextPage, previousPage, counter}) => {
     const handleChangePrevious = () => getResource(previousPage)
@@ -9,10 +10,10 @@ export const PersonNav = ({getResource, nextPage, previousPage, counter}) => {
     return (
         <div className={style.container}>
             <Link to={`/person/?list=${counter-1}`}>
-                <button onClick={handleChangePrevious} disabled={!previousPage} className={style.buttons}>Previous</button>
+                <UiButton onClick={handleChangePrevious} disabled={!previousPage} name = "Previous"/>
             </Link>
             <Link to={`/person/?list=${counter+1}`}>
-                <button onClick={handleChangeNext} disabled={!nextPage} className={style.buttons}>Next</button>
+                <UiButton onClick={handleChangeNext} disabled={!nextPage} name = "Next"/>
             </Link>
         </div>
     );
