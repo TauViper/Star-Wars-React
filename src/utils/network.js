@@ -1,29 +1,29 @@
-// const API_URL = 'https://swapi.dev/api/'
-// const API_PERSON = 'people'
-
-
-
-export const getApiResource = async (url)=>{// асинхронный запрос на сервер
-     try{ // метод try_catch
-         const res = await fetch (url); /* создаем константу для отправления Fetch запроса на сервер через асинхронную
-          функцию await */
-         if (!res.ok){ /* условие, если запрос не верный для отлавливания ошибки и возвращения False что бы не искать
-          далее сервер ответа*/
-             console.error(res.status)
-             return false
-         }
-         return await res.json(); /* Возврат ответа от сервера в формате JSON*/
-     } catch (error) {
-           console.error(error.message)
-         return false
-     }
-}
-
-
-
-// (async () =>{ /* Вызов асинхронной само вызывающей функции для вывода результата в обработку
-// без нее не сможем использовать запрос при верстке */
-//     const list = await getApiResource(API_URL + API_PERSON)
-//     console.log(list)
-// })() /*() - вызывает функцию из самой себя*/
-// // getApiResource(API_URL + API_PERSON)
+export const getApiResource = async (url) => {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      console.error(res.status);
+      return false;
+    }
+    return await res.json();
+  } catch (error) {
+    console.error(error.message);
+    return false;
+  }
+};
+/**
+ *
+ * @param url - запрос по ссылке
+ * @returns {Promise<Awaited<response>[array]>} - при асинхронном запросе на полученный url, ожидаем получения массива
+ * всех адресов Url в запросе (await Promise.all), после проходим через массив методом map и на каждой итерации
+ * получаем отдельный url из массива.
+ * полученный url из итерации (res) применяем запрос fetch(res) и then получаем данные из url в список json()
+ * результат запроса по url помещается в константу film
+ * conCurrentFilms - получает результат возврата константы film
+ */
+export const conCurrentFilms = async (url) => {
+  const film = await Promise.all(
+    url.map((res) => fetch(res).then((res) => res.json()))
+  );
+  return film;
+};

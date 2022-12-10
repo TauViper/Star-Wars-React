@@ -1,19 +1,21 @@
-import { useState } from "react";
-import {ErrorMessage} from "components/ErrorMessage/ErrorMessage";
+import React from 'react';
+import { useState } from 'react';
+import { ErrorMessage } from 'components/ErrorMessage/ErrorMessage';
 
-export const withErrorApi = Component => {
-    return props => {
-        const [errorApi, setErrorApi] = useState(false)
-        return (
-            <>
-                {errorApi
-                    ? <ErrorMessage/>
-                    : (<Component setErrorApi={setErrorApi} {...props}/>)
-                }
-            </>
-        );
-    }
-}
+export const withErrorApi = (Component) => {
+  return (props) => {
+    const [errorApi, setErrorApi] = useState(false);
+    return (
+      <>
+        {errorApi ? (
+          <ErrorMessage />
+        ) : (
+          <Component setErrorApi={setErrorApi} {...props} />
+        )}
+      </>
+    );
+  };
+};
 
 // export function withErrorApi(Component) {
 //     const [errorApi, setErrorApi] = useState(false);

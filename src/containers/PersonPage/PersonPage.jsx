@@ -1,93 +1,62 @@
-import React, {useState, useEffect} from 'react';
-import {API_PEOPLE} from "constans/api";
-import {getPersonId, getPersonImage, getPersonPage, getPersonPageId} from "services/getPersonData";
-import {PersonPageList} from "components/PersonPageComponents/PersonPageList";
-import {getApiResource} from "utils/network";
-import {useQueryParams} from "hooks/useQueryParams";
-import {PersonNav} from "components/PersonNav/PersonNav";
+import React, { useState, useEffect } from 'react';
+import { API_PEOPLE } from 'constans/api';
+import {
+  getPersonId,
+  getPersonImage,
+  getPersonPage,
+} from 'services/getPersonData';
+import { PersonPageList } from 'components/PersonPageComponents/PersonPageList';
+import { getApiResource } from 'utils/network';
+import { useQueryParams } from 'hooks/useQueryParams';
+import { PersonNav } from 'components/PersonNav/PersonNav';
 
+export const PersonPage = ({ setErrorApi }) => {
+  const [person, setPerson] = useState(null);
+  const [nextPage, setNextPage] = useState(null);
+  const [previousPage, setPreviousPage] = useState(null);
+  const [counter, setCounter] = useState(1);
 
+  const query = useQueryParams().get('list');
 
+  const getResource = async (url) => {
+    const list = await getApiResource(url);
 
+    if (list) {
+      const personList = list.results.map(({ name, url }) => {
+        const id = getPersonId(url);
+        const img = getPersonImage(id);
 
-export const PersonPage = ({setErrorApi}) => {
-    const [person, setPerson] = useState(null)
-    const [nextPage, setNextPage] = useState(null)
-    const [previousPage, setPreviousPage] = useState(null)
-    const [counter, setCounter] = useState(1)
+        return {
+          id,
+          name,
+          img,
+        };
+      });
+      setPerson(personList);
+      setPreviousPage(list.previous);
+      setNextPage(list.next);
+      setCounter(getPersonPage(url));
 
-const query = useQueryParams().get('list')
-
-
-
-     const getResource = async (url) => {/*Константа создает асинк запрос в файл network.js для получения данных с сервера*/
-        const list = await getApiResource(url) /* ожидание получения результата запроса переменной getApiResource из
-                                                файла network.js*/
-
-        if (list){
-            const personList = list.results.map(({name, url}) => { /*Создаем константу и методом map пробегаемся по базе
-                                                                Json по объекту result и вытаскиваем из него данные
-                                                                со свойствами name и url*/
-
-                const id = getPersonId(url)/* Получаем ID из функции getPersonId из файла getPersonData параметром которой является url карточки*/
-                const img = getPersonImage(id)/* Получаем img из функции getPersonImage из файла getPersonData параметром которой является id
-                                             карточки*/
-
-
-                return {/* возвращаем объект из result только свойства name и url*/
-                    id,
-                    name,
-                    img
-                }
-            })
-            setPerson(personList) /*Изменения useState работает внутри функции запроса*/
-            setPreviousPage(list.previous)
-            setNextPage(list.next)
-            setCounter(getPersonPage(url))
-
-            setErrorApi(false)
-        }else{
-            setErrorApi(true)
-        }
+      setErrorApi(false);
+    } else {
+      setErrorApi(true);
     }
-        useEffect(() => {
-            getResource(API_PEOPLE+query) /*API_PEOPLE получен из файла api.js*/
-
-        }, [])
-        return (
-                    <>
-                    <PersonNav
-                        getResource = {getResource}
-                        previousPage = {previousPage}
-                        nextPage = {nextPage}
-                        counter={counter}
-                    />
-                        {person &&  <PersonPageList person = {person}/>}
-                    </>        /* так как useState = null то используется тернарник {state && (state)} если есть информация то она выводиться
-                на страницу. */
-        );
-
+  };
+  useEffect(() => {
+    getResource(API_PEOPLE + query);
+  }, [query]);
+  return (
+    <>
+      <PersonNav
+        getResource={getResource}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        counter={counter}
+      />
+      {person && <PersonPageList person={person} />}
+    </>
+  );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const [nextPage, setNextPage] = useState(null)
 // const [previousPage, setPreviousPage] = useState(null)
@@ -95,13 +64,9 @@ const query = useQueryParams().get('list')
 // const query = useQueryParams()
 // const queryPage = query.get('page')
 
-
-
 //setNextPage(list.next)
 //             setPreviousPage(list.previous)
 //             setCounterPage(getPersonPageId(url))
-
-
 
 // <PersonNav
 //     getResource = {getResource}
