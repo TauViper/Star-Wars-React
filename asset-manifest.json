@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/Star-Wars-React/static/css/main.83e38be4.css",
+    "main.js": "/Star-Wars-React/static/js/main.3e6bc701.js",
+    "static/css/371.ecde2d64.chunk.css": "/Star-Wars-React/static/css/371.ecde2d64.chunk.css",
+    "static/js/371.6ac55535.chunk.js": "/Star-Wars-React/static/js/371.6ac55535.chunk.js",
+    "static/media/bg.jpg": "/Star-Wars-React/static/media/bg.29b25be31315dad3ce4e.jpg",
+    "static/media/not-found.png": "/Star-Wars-React/static/media/not-found.1062f5e41ef989b5973a.png",
+    "static/media/back.svg": "/Star-Wars-React/static/media/back.1640ee54a71d12449eec15d68bbfc14e.svg",
+    "index.html": "/Star-Wars-React/index.html",
+    "main.83e38be4.css.map": "/Star-Wars-React/static/css/main.83e38be4.css.map",
+    "main.3e6bc701.js.map": "/Star-Wars-React/static/js/main.3e6bc701.js.map",
+    "371.ecde2d64.chunk.css.map": "/Star-Wars-React/static/css/371.ecde2d64.chunk.css.map",
+    "371.6ac55535.chunk.js.map": "/Star-Wars-React/static/js/371.6ac55535.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.83e38be4.css",
+    "static/js/main.3e6bc701.js"
+  ]
+}
