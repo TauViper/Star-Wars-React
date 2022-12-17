@@ -9,6 +9,7 @@ import { CharacterImg } from 'components/CharacterPageComponent/CharacterImg/Cha
 import style from 'containers/CharacterPage/CharacterPage.module.css';
 import { CharacterGoBackLink } from 'components/CharacterPageComponent/CharacterGoBackLink/CharacterGoBackLink';
 import { UiLoader } from 'components/UI/UILoader/UILoader';
+import { useSelector } from 'react-redux';
 // import { CharacterFilms } from 'components/CharacterPageComponent/CharacterFilms/CharacterFilms';
 
 const CharacterFilms = React.lazy(() =>
@@ -24,12 +25,15 @@ export const CharacterPage = ({ setErrorApi }) => {
   const [characterName, setCharacterName] = useState(null);
   const [characterPhoto, setCharacterPhoto] = useState(null);
   const [characterFilms, setCharacterFilms] = useState(null);
-
+  const [characterFavorite, setCharacterFavorite] = useState(false);
+  const storeData = useSelector((state) => state.favoriteReducer);
   const { id } = useParams();
+
   useEffect(() => {
     (async () => {
       const res = await getApiResource(`${API_CHARACTER}/${id}/`);
       console.log(res);
+      storeData[id] ? setCharacterFavorite(true) : setCharacterFavorite(false);
       if (res) {
         setCharacterInfo([
           { title: 'Height', data: `${res.height} sm` },
@@ -56,8 +60,11 @@ export const CharacterPage = ({ setErrorApi }) => {
         <span className={style.person__name}>{characterName} </span>
         <div className={style.container}>
           <CharacterImg
+            id={id}
             characterPhoto={characterPhoto}
             characterName={characterName}
+            setCharacterFavorite={setCharacterFavorite}
+            characterFavorite={characterFavorite}
           />
           {characterInfo && (
             <CharacterSpecification characterInfo={characterInfo} />
