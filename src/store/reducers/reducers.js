@@ -1,12 +1,14 @@
 import { ADD_FAVORITE, REMOVE_FAVORITE } from 'store/constants/actionConstants';
 import { combineReducers } from 'redux';
 import { omit } from 'lodash';
+import { getLocalStorage } from 'utils/localStorage';
 
 /**
  *
  * @type {{initialState: Object}} - state, который будет работать по умолчанию
+ * getLocalStorage - помещаем в локальное хранилище выбранных персонажей
  */
-const initialState = {};
+const initialState = getLocalStorage('store');
 /**
  *
  * @param state

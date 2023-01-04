@@ -5,13 +5,15 @@ import { PersonPage } from 'containers/PersonPage/PersonPage';
 import { NotFoundPage } from 'containers/NotFoundPage/NotFoundPage';
 import { CharacterPage } from 'containers/CharacterPage/CharacterPage';
 import { FavoritePage } from 'containers/FavoritePage/FavoritePage';
+import { CharacterSearch } from 'containers/CharacterSearch/CharacterSearch';
 
 const PersonPageWithError = withErrorApi(PersonPage);
 const CharacterPageWithError = withErrorApi(CharacterPage);
+const CharacterSearchWithError = withErrorApi(CharacterSearch);
 
 export const routers = [
   {
-    path: '/',
+    path: '/Star-Wars-React',
     component: <HomePage />,
   },
   {
@@ -25,6 +27,10 @@ export const routers = [
   {
     path: '/favorite',
     component: <FavoritePage />,
+  },
+  {
+    path: '/search',
+    component: <CharacterSearchWithError />,
   },
   {
     path: '*',
